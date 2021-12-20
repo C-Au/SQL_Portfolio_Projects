@@ -1,42 +1,9 @@
---CREATE TABLE dbo.Duration  
---    (startDate datetime2, endDate datetime2);  
-    
---INSERT INTO dbo.Duration(startDate, endDate)  
---    VALUES ('2007-05-06 12:10:09', '2007-05-07 12:10:09');  
-    
---SELECT DATEDIFF(day, startDate, endDate) AS 'Duration'  
---    FROM dbo.Duration;  
--- Returns: 1
-
-------------------------
-
-SELECT DATEDIFF(MINUTE, started_at, ended_at) AS Duration_in_minutes  
-FROM [dbo].[202004-divvy-tripdata];
-
--------------------------
--- SET DATEFIRST to U.S. English default value of 7.  
-SET DATEFIRST 1;  
-  
-SELECT DATEPART(DW, started_at) as Day_of_week FROM [dbo].[202004-divvy-tripdata]; 
-
---------------------------
--- How to drop a column in an existing table
-
-ALTER TABLE [dbo].[202004-divvy-tripdata] DROP COLUMN Duration_in_minutes;
-
---------------------------
-
-ALTER TABLE [dbo].[202004-divvy-tripdata] ADD Duration_in_minutes INT NULL;
 
 -----------
 -- Added duration in mins for each trip
 
 UPDATE [dbo].[202004-divvy-tripdata]
 SET Duration_in_minutes = DATEDIFF(MINUTE, started_at, ended_at) FROM [dbo].[202004-divvy-tripdata]
-
---------------------------------
-
-ALTER TABLE [dbo].[202004-divvy-tripdata] ADD Day_of_week INT;
 
 ---------------------------------
 -- Sunday begins at '1'
